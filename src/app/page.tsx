@@ -129,7 +129,7 @@ export default function Home() {
           </div>
         </div>
         <div className="w-1/4 flex items-center justify-center">
-          <div className="border-4 border-gray-300 w-96 p-4">
+          <div className="border-4 border-gray-300 w-[400px] p-4">
             <p>
               <span className="font-bold">bitsofcode.</span> Articles on
               Frontend Development. All articles are written by{" "}
