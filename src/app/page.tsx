@@ -110,7 +110,7 @@ export default function Home() {
       <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between space-y-4  lg:space-y-0 lg:space-x-6">
         <div className="space-y-10 w-full lg:w-2/4">
           <h1 className="font-bold text-3xl lg:text-5xl">Search</h1>
-          <div className="flex items-center border rounded">
+          <div className="flex items-center border rounded relative">
             <input
               type="text"
               value={searchTerm}
