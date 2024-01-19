@@ -109,7 +109,7 @@ export default function Home() {
     <div className="px-4 py-20 bg-gray-100 min-h-screen sm:px-6 lg:px-8">
       <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between space-y-4  lg:space-y-0 lg:space-x-6">
         <div className="space-y-10 w-full lg:w-2/4">
-        <h1 className="font-bold text-3xl lg:text-5xl">Search</h1>
+          <h1 className="font-bold text-3xl lg:text-5xl">Search</h1>
           <div className="flex items-center border rounded">
             <input
               type="text"
@@ -155,7 +155,7 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="w-full lg:w-2/4">
+      <div className="w-full mt-6 ">
         {searchTerm && (
           <p className="text-sm text-gray-600">
             {filteredArticles.length} posts were found.
