@@ -1,113 +1,175 @@
-import Image from "next/image";
+"use client";
+import React, { useState } from "react";
+import { FaTwitter } from "react-icons/fa";
+import { AiOutlineClose } from 'react-icons/ai';
+
+interface Article {
+  id: number;
+  title: string;
+  date?: string;
+  content: string;
+}
+
+const articles: Article[] = [
+  {
+    id: 1,
+    title: "The Evolution of Responsive Design",
+    date: "2022-05-15",
+    content:
+      "Responsive web design has changed significantly over the years. It's not just about mobile anymore; it's about truly fluid layouts...",
+  },
+  {
+    id: 2,
+    title: "Exploring the Power of CSS Flexbox",
+    date: "2022-06-10",
+    content:
+      "CSS Flexbox is a powerful layout tool that allows for responsive, flexible layouts without the hassle of floats or positioning...",
+  },
+  {
+    id: 3,
+    title: "Introduction to JavaScript ES6 Features",
+    date: "2022-07-22",
+    content:
+      "The ES6 release of JavaScript has brought many improvements to the language, including arrow functions, template literals, and classes...",
+  },
+  {
+    id: 4,
+    title: "Understanding Asynchronous JavaScript",
+    date: "2022-08-30",
+    content:
+      "Asynchronous JavaScript, from callbacks to promises to async/await, is a foundational concept for modern web development...",
+  },
+  {
+    id: 5,
+    title: "The Importance of Web Accessibility",
+    date: "2022-09-12",
+    content:
+      "Making your websites accessible is crucial for reaching all audiences and it's a matter of ethics and inclusivity in the digital space...",
+  },
+  {
+    id: 6,
+    title: "A Guide to CSS Variables",
+    date: "2022-10-05",
+    content:
+      "CSS Variables, also known as custom properties, are a game-changer for writing DRY, maintainable CSS code...",
+  },
+  {
+    id: 7,
+    title: "Building Single Page Applications with React",
+    date: "2022-11-17",
+    content:
+      "Single Page Applications (SPAs) offer a seamless user experience. React is a library that simplifies creating complex SPAs...",
+  },
+  {
+    id: 8,
+    title: "SVGs in Web Design: Scalability and Performance",
+    date: "2022-12-01",
+    content:
+      "Using SVGs in web design not only ensures sharp visuals on all screen sizes but also keeps performance in check with their small file sizes...",
+  },
+  {
+    id: 9,
+    title: "Web Performance Optimization Techniques",
+    date: "2023-01-20",
+    content:
+      "Optimizing web performance is key to improving user experience and SEO. Techniques include image optimization, lazy loading, and code splitting...",
+  },
+];
 
 export default function Home() {
+  const [searchTerm, setSearchTerm] = useState<string>("");
+
+  const highlightText = (text: string, highlight: string): JSX.Element => {
+    if (!highlight.trim()) {
+      return <>{text}</>;
+    }
+    const regex = new RegExp(`(${highlight})`, "gi");
+    const parts = text.split(regex);
+    return (
+      <span>
+        {parts.map((part, index) =>
+          regex.test(part) ? (
+            <span key={index} className="bg-yellow-200 font-bold">
+              {part}
+            </span>
+          ) : (
+            part
+          )
+        )}
+      </span>
+    );
+  };
+
+  const filteredArticles = articles.filter(
+    (article) =>
+      article.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      article.content.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editing&nbsp;
-          <code className="font-mono font-bold">src/app/page.tsx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
+    <div className="space-y-4 px-72 py-20 bg-gray-100 min-h-screen">
+      <div className="flex items-center justify-between ">
+        <div className="space-y-10 w-1/2 relative">
+          <h1 className="font-bold text-5xl">Search</h1>
+          <div className="flex items-center border rounded">
+            <input
+              type="text"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              placeholder="Search for articles..."
+              className="px-4 py-3 w-full text-gray-700 focus:outline-none rounded"
             />
-          </a>
+            {searchTerm && (
+              <button
+                onClick={() => setSearchTerm("")}
+                className="absolute right-0 mr-4 text-gray-700"
+              >
+                <AiOutlineClose />
+              </button>
+            )}
+          </div>
+        </div>
+        <div className="w-1/4 flex items-center justify-center">
+          <div className="border-4 border-gray-300 w-96 p-4">
+            <p>
+              <span className="font-bold">bitsofcode.</span> Articles on
+              Frontend Development. All articles are written by{" "}
+              <span className="underline">Ire Aderinokun,</span> Frontend
+              Developer and User Interface Designer.
+            </p>
+            <div className="flex items-center space-x-2 mt-3 ">
+              <a
+                href="https://twitter.com/ireaderinokun"
+                className="bg-blue-500 hover:underline gap-2 flex py-1 px-2 rounded items-center justify-center"
+              >
+                <FaTwitter size={20} className="text-white" />
+                <h1 className="text-white"> @ireaderinokun</h1>
+              </a>
+              <a className="p-1 bg-white rounded">19.1K followers</a>
+            </div>
+          </div>
         </div>
       </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-full sm:before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-full sm:after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
+      <div className="w-2/4">
+        {searchTerm && (
+          <p className="text-sm text-gray-600">
+            {filteredArticles.length} posts were found.
+          </p>
+        )}
+        {filteredArticles.map((article) => (
+          <div
+            key={article.id}
+            className="py-2 border-b-4 border-gray-200 mb-4 space-y-4"
+          >
+            <h3 className="text-lg font-semibold">
+              {highlightText(article.title, searchTerm)}
+            </h3>
+            <p className="text-gray-600 text-sm">{article.date}</p>
+            <p className="text-gray-700">
+              {highlightText(article.content, searchTerm)}
+            </p>
+          </div>
+        ))}
       </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore starter templates for Next.js.
-          </p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50 text-balance`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
+    </div>
   );
 }
