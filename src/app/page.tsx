@@ -1,7 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { FaTwitter } from "react-icons/fa";
-import { AiOutlineClose } from 'react-icons/ai';
+import { AiOutlineClose } from "react-icons/ai";
 
 interface Article {
   id: number;
@@ -106,10 +106,10 @@ export default function Home() {
       article.content.toLowerCase().includes(searchTerm.toLowerCase())
   );
   return (
-    <div className="space-y-4 px-72 py-20 bg-gray-100 min-h-screen">
-      <div className="flex items-center justify-between ">
-        <div className="space-y-10 w-1/2 relative">
-          <h1 className="font-bold text-5xl">Search</h1>
+    <div className="px-4 py-20 bg-gray-100 min-h-screen sm:px-6 lg:px-8">
+      <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between space-y-4  lg:space-y-0 lg:space-x-6">
+        <div className="space-y-10 w-full lg:w-2/4">
+        <h1 className="font-bold text-3xl lg:text-5xl">Search</h1>
           <div className="flex items-center border rounded">
             <input
               type="text"
@@ -128,28 +128,34 @@ export default function Home() {
             )}
           </div>
         </div>
-        <div className="w-1/4 flex items-center justify-center">
-          <div className="border-4 border-gray-300 w-[400px] p-4">
+        <div className="flex flex-col w-full lg:w-1/4">
+          <div className="border-4 border-gray-300 p-4 rounded-lg">
             <p>
               <span className="font-bold">bitsofcode.</span> Articles on
               Frontend Development. All articles are written by{" "}
               <span className="underline">Ire Aderinokun,</span> Frontend
               Developer and User Interface Designer.
             </p>
-            <div className="flex items-center space-x-2 mt-3 ">
+            <div className="flex items-center space-x-2 ">
               <a
                 href="https://twitter.com/ireaderinokun"
-                className="bg-blue-500 hover:underline gap-2 flex py-1 px-2 rounded items-center justify-center"
+                className="bg-blue-500 gap-2 flex py-1 px-2 rounded items-center justify-center"
               >
                 <FaTwitter size={20} className="text-white" />
                 <h1 className="text-white"> @ireaderinokun</h1>
               </a>
-              <a className="p-1 bg-white rounded">19.1K followers</a>
+              <a
+                href="https://twitter.com/ireaderinokun"
+                className="bg-white gap-2 flex py-1 px-2 rounded items-center justify-center"
+              >
+                <span>19.1k</span>
+                <h1 className=""> follower</h1>
+              </a>
             </div>
           </div>
         </div>
       </div>
-      <div className="w-2/4">
+      <div className="w-full lg:w-2/4">
         {searchTerm && (
           <p className="text-sm text-gray-600">
             {filteredArticles.length} posts were found.
